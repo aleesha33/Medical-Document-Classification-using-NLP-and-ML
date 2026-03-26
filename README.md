@@ -1,2 +1,15 @@
 # Medical-Document-Classification-using-NLP-and-ML
-Developed a multi-class medical document classification system using NLP and machine learning. Applied TF-IDF with additional structural features (line count, word count, file format encoding) to improve performance. Compared SVM, Logistic Regression, XGBoost, and Naive Bayes models, achieving high accuracy with SVM showing near-perfect results.
+A multi-class text classification system that automatically categorizes medical documents — such as prescriptions, lab reports, and insurance claims — using Natural Language Processing (NLP) and machine learning models.
+Overview
+Medical facilities generate large volumes of documents daily. Manually sorting them is time-consuming and error-prone. This project builds an automated classification pipeline that reads OCR-extracted text from medical documents and predicts the document type with high accuracy. The project covers the full ML workflow — from exploratory data analysis and feature engineering to model training, evaluation, and comparison across four different classifiers.
+Dataset
+The dataset used is medical_documents_dataset.csv, which contains OCR-extracted text from various medical documents. The key features used are text (raw OCR content), ocr_lines (structured list of lines used to engineer line count), file_format (PDF, image, etc.), and an engineered word_count feature. The target variable is label, representing the document category in a multi-class setup.
+Workflow
+The project begins with exploratory data analysis — checking dataset shape, data types, and missing values, followed by visualizations of class distribution, file format spread, document length distributions (OCR line count and word count), and a word cloud generated from the full text corpus. Feature engineering involved parsing ocr_lines from string to list using ast.literal_eval, then deriving line_count and word_count as numerical features.
+Preprocessing was handled through a ColumnTransformer that applies TF-IDF Vectorization (with bigrams, max_features=10,000, min_df=2, max_df=0.95) on the text column, StandardScaler on the numerical features, and OneHotEncoder on file format. A separate preprocessor was used for Naive Bayes due to its non-negative input requirement. All models were wrapped in sklearn Pipelines for clean, reproducible training.
+Models
+Four classifiers were trained and compared: Linear SVM (C=1.0, class-balanced), Logistic Regression (max_iter=2000, class-balanced), XGBoost (n_estimators=500, max_depth=6, learning_rate=0.05), and Complement Naive Bayes. Models were evaluated using accuracy scores, confusion matrices, and full classification reports (precision, recall, F1-score per class). Linear SVM delivered the best performance, achieving near-perfect classification accuracy across all document types.
+Tech Stack
+The project uses Python with pandas and NumPy for data handling, Matplotlib and WordCloud for visualization, scikit-learn for preprocessing, model building, and evaluation, and XGBoost for the gradient boosting classifier.
+Usage
+Clone the repository, install dependencies (pandas, numpy, matplotlib, scikit-learn, xgboost, wordcloud), update the dataset path in Cell 1 to point to your local copy of medical_documents_dataset.csv, and run all cells sequentially in Google Colab or a local Jupyter environment.
